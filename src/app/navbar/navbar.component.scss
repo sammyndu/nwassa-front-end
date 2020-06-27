@@ -1,0 +1,169 @@
+nav {
+    position: relative;
+}
+
+li {
+  outline: none;
+}
+
+
+.navbar{
+  position: fixed;
+  padding: 0.3rem 1rem !important;
+
+  a.navbar-brand{
+    span {
+     font-weight: 600;
+    }
+    @media (max-width: 700px){
+      img{
+        width: 40px;
+        height: 40px;
+      }
+      span{
+        display: none;
+      }
+    }
+    @media (min-width: 700px) and (max-width: 1024px){
+      img{
+        width: 40px;
+        height: 40px;
+      }
+      span{
+        font-weight: 700;
+        font-size: 20px;
+        margin-left: 40px;
+      }
+    }
+    @media (min-width: 1024px) and (max-width: 1500px){
+      img{
+        width: 50px;
+        height: 50px;
+      }
+      span{
+        font-weight: 700;
+        font-size: 25px;
+      }
+    }
+    @media screen and (min-width: 1500px) {
+      img{
+        width: 52px;
+        height: 52px;
+      }
+      span{
+        font-weight: 700;
+        font-size: 30px;
+      }
+    }
+  }
+
+  ul.nav-menu{
+    flex-direction: row;
+    li{
+      color: black;
+      :hover{
+        color: #f89f24 !important;
+      }
+      a.nav-link{
+        color: black;
+        cursor: pointer;
+        &:hover{
+          text-decoration: none !important;
+        }
+      }
+    }
+  }
+
+  .nav-icon-hover:hover{
+      background-color: transparent;
+      box-shadow: 0.08px 0.08px #888888;
+  }
+  z-index: 1000;
+  background: #f8f8f8;
+  border-bottom: #e7e7e7 1px solid;
+  button#sidebar-Toggle{
+      display: none;
+
+      @media screen and (max-width: 1024px) {
+          display: block;
+      }
+  }
+  .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+  }
+  .quizList{
+      list-style: none;
+      li{
+          margin-left:-18px;
+      }
+      .quizListHeader{
+          font-weight: 600;
+      }
+      .quizListChildren{
+          font-size:14px;
+          padding-top:5px;
+          padding-bottom:5px;
+          :hover{
+              color:#490b0b;
+          }
+
+          a{
+              color:#000;
+              cursor: pointer;
+
+          }
+
+      }
+  }
+
+  .user-dropdown-header{
+      display: inline-block;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 5px 5px;
+      color: #212529;
+      text-align: inherit;
+      white-space: nowrap;
+      background-color: transparent;
+  }
+
+  .show-dropdown{
+      display: block;
+  }
+  .user-dropdown{
+      position: absolute;
+      top: 50px;
+      right: 10px;
+      z-index: 1000;
+      max-width: 240px;
+      left: inherit;
+      .dropdown-item{
+          cursor: pointer;
+      }
+  }
+  .dropdown-width{
+      min-width:19em !important;
+  }
+  @media only screen and (max-width:300px){
+      .icon{
+          font-size:12px;
+      }
+      .nav-brand-text{
+          font-size:15px;
+      }
+  }
+  .submenuLink{
+      margin-left:21px;
+      font-size:14px;
+      color:#000;
+  }
+
+}
+.login{
+  &:hover{
+    cursor: pointer !important;
+    color: #f89f24 !important;
+  }
+}

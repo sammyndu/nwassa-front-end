@@ -1,0 +1,55 @@
+.toggle-border {
+    border: 0px !important;
+    box-shadow: none !important;
+    pointer-events: none;
+  }
+  .user-img {
+    width: 15rem;
+    height: 15rem;
+    border-radius: 8rem;
+    margin-left: -14px !important;
+  }
+
+  .card {
+    margin-top: 5rem;
+  }
+  
+  .card-title,
+  .card label {
+    font-weight: 680;
+    .page-header {
+      font-size: 1.75 rem;
+      font-weight: 600;
+    }
+  }
+  
+  input.ng-invalid.ng-touch {
+    border: 1px solid red;
+  }
+  
+  .inlineStyle {
+    color: red;
+  }
+  .float-right i {
+    cursor: pointer;
+  }
+  i.icon-pointer {
+    cursor: pointer;
+  }
+  @media screen and (max-width: 768px) {
+    .img-container {
+      border-top: 1px solid #e9ecef;
+      .user-img {
+        float: none !important;
+      }
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .img-container {
+      border-top: 1px solid #e9ecef;
+      .user-img {
+        float: none !important;
+      }
+    }
+  }
+  

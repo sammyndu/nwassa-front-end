@@ -1,0 +1,74 @@
+
+<nav class="navbar navbar-expand-md float-left col-12 p-0">
+  <a class="nav-brand-text navbar-brand" [routerLink]="['/']">
+    <img src="../../assets/img/tingo_logo.png" style="width: 40px; height:40px; position: static;" alt="" />
+    <span class="brand ml-0" style="color: #f89f24; position: static;">Nwassa</span>
+  </a>
+  <div class="collapse navbar-collapse" id="navbarCollapse"></div>
+  <ul class="nav-menu navbar-nav float-right">
+    <li class="nav-item dropdown no-arrow mx-1 nav-icon-hover">
+      <a class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"></a>
+    </li>
+    <li id="quizzesLink" class="nav-item dropdown no-arrow mx-1 nav-icon-hover">
+      <a class="nav-link" role="button" [routerLink]="['quizzes']" aria-haspopup="true"
+        aria-expanded="false">
+        <i class="icon fas fa-home mt-1"></i>
+        <b class=" d-none d-sm-inline font-weight-normal"> Home</b>
+      </a>
+    </li>
+    <li class="nav-item dropdown no-arrow mx-1 nav-icon-hover">
+      <a class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
+        <i class="icon fas fa-users mt-1" aria-hidden="true"></i>
+        <b class="d-none d-sm-inline font-weight-normal"> About</b>
+      </a>
+    </li>
+
+    <li class="nav-item dropdown no-arrow mx-1 nav-icon-hover">
+      <a class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
+        <i class="icon fas fa-address-book mt-1" aria-hidden="true"></i>
+        <b class="d-none d-sm-inline font-weight-normal"> Contact</b>
+      </a>
+    </li>
+    <li routerLink="/products" *ngIf="isAuthenticated" class="nav-item dropdown no-arrow mx-1 nav-icon-hover">
+      <a  class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
+        <i class="icon fas fa-leaf mt-1" aria-hidden="true"></i>
+        <b class="d-none d-sm-inline font-weight-normal p-1">Products</b>
+      </a>
+    </li>
+    <li class="nav-item dropdown no-arrow mx-1" *ngIf="!isAuthenticated">
+      <a class="nav-link login" role="button" aria-haspopup="true" aria-expanded="false" (click)="login()">
+        Login
+      </a>
+    </li>
+    <ng-container *ngIf="isAuthenticated">
+      <li class="nav-item dropdown no-arrow nav-icon-hover">
+
+        <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+          id="user-dropdown-btn" aria-expanded="false">
+          <img src="/assets/img/userImage.png" class="user-avatar" />
+        </a>
+
+        <div class="dropdown-width dropdown-menu user-dropdown"
+          id="subMenuDiv" aria-labelledby="user-dropdown-btn">
+
+          <ng-container>
+            <div class="container">
+              <div class="row">
+                <div class="col-12 px-3">
+                  <a href="#" class="float-left user-dropdown-header" [routerLink]="['/profile/account']"
+                    [routerLinkActive]="['active']">{{ user.firstName }}</a>
+                  <a (click)="logout()" class="float-right user-dropdown-header" data-toggle="modal"
+                    data-target="#logoutModal">Logout</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+            <a routerLink="/profile" class="submenuLink">My Profile</a>
+
+          </ng-container>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</nav>

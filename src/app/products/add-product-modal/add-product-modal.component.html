@@ -1,0 +1,193 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">Add Product</h5>
+    <button type="button" class="close" (click)="dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body thin-scroll">
+    <form #addProductForm="ngForm" >
+      <div class="form-group mb-3">          
+
+        <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-label-group">
+              <label for="name" class="text-bold text-dark"><b>Product Name</b></label>
+              <input
+                id="name"
+                #name='ngModel'
+                type="text"
+                class="form-control"
+                [ngClass]="{'is-invalid': name?.errors && name?.touched || submitting && name?.errors}"
+                name="name"
+                
+                required="required"
+                [(ngModel)]="productInfo.title"
+              />
+              <span *ngIf="name?.errors && name?.touched || submitting && name?.errors" class="text-danger">
+                This field is required
+              </span>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="form-label-group">
+              <label for="location" class="font-weight-bold text-dark">Location (country)</label>
+              <input
+                id="location"
+                type="text"
+                class="form-control"
+                name="location"
+                
+                required="required"
+                #location="ngModel"
+                [ngClass]="{'is-invalid': location?.errors && location?.touched || submitting && location?.errors}"
+                [(ngModel)]="productInfo.location"
+              />
+              <span *ngIf="location?.errors && location?.touched || submitting && location?.errors" class="text-danger">
+                This field is required
+              </span>
+            </div>
+          </div>
+        </div>
+
+     <div class="form-row">
+       <div class="col-md-6">
+        <div class="form-label-group">
+          <label for="price" class="text-bold text-dark"><b>Price</b></label>
+          <input
+            id="price"
+            type="number"
+            class="form-control"
+            name="price"
+            min="1" 
+            
+            required="required"
+            #price="ngModel"
+            [ngClass]="{'is-invalid': price?.errors && price?.touched || submitting && price?.errors}"
+            [(ngModel)]="productInfo.price"
+          />
+          <span *ngIf="price?.errors && price?.touched || submitting && price?.errors" class="text-danger">
+            This field is required
+          </span>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="form-label-group">
+          <label for="roi" class="text-bold text-dark"><b>Return On Investment (%)</b></label>
+          <input
+            id="roi"
+            type="number"
+            class="form-control"
+            name="roi"
+            min="1" 
+            
+            required="required"
+            #roi="ngModel"
+            [ngClass]="{'is-invalid': roi?.errors && roi?.touched || submitting && roi?.errors}"
+            [(ngModel)]="productInfo.roi"
+          />
+          <span *ngIf="roi?.errors && roi?.touched || submitting && roi?.errors" class="text-danger">
+            This field is required
+          </span>
+        </div>
+       </div>
+     </div>
+     <div class="form-row">
+        <div class="col-md-6">
+            <div class="form-label-group">
+              <label for="farmSize" class="text-bold text-dark"><b>Size of farm (square meters)</b></label>
+              <input
+                id="farmSize"
+                type="number"
+                class="form-control"
+                name="farmSize"
+                
+                required="required"
+                min="1" 
+                #farmSize="ngModel"
+                [ngClass]="{'is-invalid': farmSize?.errors && farmSize?.touched || submitting && farmSize?.errors}"
+                [(ngModel)]="productInfo.sizeofFarm"
+              />
+              <span *ngIf="farmSize?.errors && farmSize?.touched || submitting && farmSize?.errors" class="text-danger">
+                This field is required
+              </span>
+            </div>
+           </div>
+        <div class="col-md-6">
+         <div class="form-label-group">
+           <label for="productPhoto" class="text-bold text-dark"><b>Picture of farm</b></label>
+           <input
+             id="productPhoto"
+             type="file"
+             class="form-control"
+             name="productPhoto"
+             required="required"
+             #productPhoto
+             #photo="ngModel"
+            [ngClass]="{'is-invalid': photo?.errors && photo?.touched || submitting && photo?.errors}"
+             accept="image/*"
+             [(ngModel)]="productInfo.productPhoto"
+           />
+           <span *ngIf="photo?.errors && photo?.touched || submitting && photo?.errors" class="text-danger">
+            This field is required
+          </span>
+         </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-6">
+            <div class="form-label-group">
+              <label for="duration" class="text-bold text-dark"><b>Return Duration</b></label>
+              <input
+                id="duration"
+                type="number"
+                class="form-control"
+                name="duration"
+                
+                required="required"
+                min="1" 
+                #duration="ngModel"
+                [ngClass]="{'is-invalid': duration?.errors && duration?.touched || submitting && duration?.errors}"
+                [(ngModel)]="productInfo.duration"
+              />
+              <span *ngIf="duration?.errors && duration?.touched || submitting && duration?.errors" class="text-danger">
+                This field is required
+              </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-label-group">
+            <label for="numberOfUnits" class="text-bold text-dark"><b>Number Of Units</b></label>
+            <input
+              id="numberOfUnits"
+              type="number"
+              class="form-control"
+              name="numberOfUnits"
+              
+              required="required"
+              min="1" 
+              #numberOfUnits="ngModel"
+              [ngClass]="{'is-invalid': numberOfUnits?.errors && numberOfUnits?.touched || submitting && numberOfUnits?.errors}"
+              [(ngModel)]="productInfo.numberOfUnits"
+            />
+            <span *ngIf="numberOfUnits?.errors && numberOfUnits?.touched || submitting && numberOfUnits?.errors" class="text-danger">
+              This field is required
+            </span>
+          </div>
+      </div>
+      </div>
+    </div>
+    </form>    
+  </div>
+  <div class="modal-footer">
+    <button (click)="dismiss()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button 
+        (click)="addProduct(addProductForm)" 
+        type="button"
+        class="btn text-light" 
+        style="background-color: #f89f24;">
+    <i class="fas fa-plus"></i>
+        Add Product
+    </button>
+</div>

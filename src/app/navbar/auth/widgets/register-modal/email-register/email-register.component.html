@@ -1,0 +1,120 @@
+<div class="modal-body">
+  <div *ngIf="showError" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ errMessage }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    <form #registerationForm="ngForm" >
+      <div class="form-group">
+        <div class="form-row  mb-3">
+          <div class="col-md-12">
+            <div class="form-label-group">
+              <label for="registerInputEmail" class="text-bold text-dark"><b>Email address</b></label>
+              <input
+                id="registerInputEmail"
+                type="email"
+                class="form-control"
+                [ngClass]="{'is-invalid': email?.errors && email?.touched }"
+                name="email"
+                
+                required="required"
+                [(ngModel)]="registerModel.email"
+                #email="ngModel"
+              />
+              <span *ngIf="email.touched && !email.valid" class="text-danger">
+                This field is required
+              </span>
+            </div>
+          </div>
+        </div>            
+
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <div class="form-label-group">
+              <label for="registerInputFirstName" class="font-weight-bold text-dark">First Name</label>
+              <input
+                id="registerInputFirstName"
+                type="text"
+                class="form-control"
+                [ngClass]="{'is-invalid': firstName?.errors && firstName?.touched }"
+                name="firstname"
+                
+                required="required"
+                #firstName="ngModel"
+                [(ngModel)]="registerModel.firstName"
+              />
+              <span *ngIf="firstName.touched && !firstName.valid" class="text-danger">
+                This field is required
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-label-group">
+              <label for="registerInputLastName" class="font-weight-bold text-dark">Last Name</label>
+              <input
+                id="registerInputLastName"
+                type="text"
+                class="form-control"
+                [ngClass]="{'is-invalid': lastName?.errors && lastName?.touched }"
+                name="lastname"
+                
+                required="required"
+                [(ngModel)]="registerModel.lastName"
+                #lastName="ngModel"
+              />
+              <span *ngIf="lastName.touched && !lastName.valid" class="text-danger">
+                This field is required
+              </span>
+            </div>
+          </div>
+        </div>
+
+     <div class="form-row">
+       <div class="col-md-6 mb-3">
+        <div class="form-label-group">
+          <label for="registerInputPassword" class="text-bold text-dark"><b>Password</b></label>
+          <input
+            id="registerInputPassword"
+            type="password"
+            class="form-control"
+            [ngClass]="{'is-invalid': password?.errors && password?.touched }"
+            name="password"
+            
+            required="required"
+            [(ngModel)]="registerModel.password"
+            #password="ngModel"
+          />
+          <span *ngIf="password.touched && !password.valid" class="text-danger">
+            This field is required
+          </span>
+        </div>
+       </div>
+       <div class="col-md-6 mb-3">
+        <div class="form-label-group">
+          <label for="registerInputConfirmPassword" class="text-bold text-dark"><b>Confirm Password</b></label>
+          <input
+            id="registerInputConfirmPassword"
+            type="password"
+            class="form-control"
+            [ngClass]="{'is-invalid': confirmPassword?.errors && confirmPassword?.touched }"
+            name="confirmPassword"
+            
+            required="required"
+            [(ngModel)]="registerModel.confirmPassword"
+            #confirmPassword="ngModel"
+          />
+          <span *ngIf="confirmPassword.touched && passwordNotMatchErrorDisplay()" class="text-danger">
+            Passwords do not match!
+          </span>
+        </div>
+       </div>
+     </div>
+    </div>
+    </form>    
+  </div>
+  <div class="modal-footer">
+    <button (click)="dismiss()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button [disabled]="!registerationForm.valid || passwordNotMatchErrorDisplay()" (click)="register(registerationForm)" type="button" class="btn text-light" style="background-color: #f89f24;">Register</button>
+    <!-- <button (click)="register(phoneregisterationForm)" *ngIf="emailRegister" type="button" class="btn text-light" style="background-color: #f89f24;">Register</button> -->
+  </div>

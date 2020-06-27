@@ -1,0 +1,16 @@
+.welcome-slide {
+    padding-top: 100px;
+}
+.single-welcome-slides {
+    min-height: 800px
+}
+
+@media (max-width: 700px) {
+    .welcome-slide {
+        padding-top: 10px;
+    }
+    .single-welcome-slides {
+        min-height: 500px
+    }
+    
+}

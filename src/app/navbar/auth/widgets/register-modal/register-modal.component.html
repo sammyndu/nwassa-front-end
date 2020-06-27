@@ -1,0 +1,17 @@
+
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLongTitle">Register</h5>
+  <button type="button" class="close" (click)="dismiss()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" *ngIf="!registerMode">
+  <button class="btn btn-danger form-control" (click)="chooseEmail()">Register with Email</button>
+  <div class="text-center mb-4">
+    OR
+  </div>
+  <button class="btn btn-primary form-control" (click)="choosPhone()">Register with Phone Number</button>
+</div>
+<app-email-register *ngIf="emailRegister"></app-email-register>
+<app-phone-register *ngIf="phoneRegister"></app-phone-register>
+       

@@ -1,0 +1,193 @@
+<app-navbar></app-navbar>
+
+<div class="breadcrumb-area bg-img bg-overlay jarallax" [ngStyle]="{'background-image':'url(' + imgUrl + ')'}" >
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12">
+          <div class="breadcrumb-text">
+            <h2>{{ productInfo.title }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container p-0" *ngIf="myProduct()">
+    <div class="p-2">
+      <div class="card-title mt-3">
+        <h1 class="page-header"></h1>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h6 class="card-title float-left">Product Info</h6>
+          <h6 class="float-right">
+            <i *ngIf="!toggleProductInfoSaveButton" class="fas fa-pencil-alt mr-2"
+              (click)="editButtonClicked()"></i>
+            <button *ngIf="toggleProductInfoSaveButton" type="button" class="btn btn-outline-secondary mr-2"
+              (click)="cancelProductInfoEditClicked()">
+              <i class="fa fa-times icon-pointer mr-1"></i>Cancel
+            </button>
+            <button *ngIf="productInfoForm.dirty && productInfoForm.valid" type="button" class="btn btn-outline-primary"
+              (click)="save(productInfo.id)">
+              <i class="fas"
+                [ngClass]="{'fa fa-save icon-pointer': !isProcessing, 'fa-spinner fa-spin': isProcessing}"></i> Save
+            </button>
+          </h6>
+        </div>
+        <div class="card-body">
+          <div class="conatainer-fluid">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="card-text">
+                  <form #productInfoForm="ngForm" class="personal-info">
+                    <input type="hidden" name="id" [(ngModel)]="productInfo.id" />
+                    <div class="form-group row">
+                      <label for="username" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Name</label>
+                      <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                        <input [ngClass]="{
+                          'toggle-border': !toggleProductInfoSaveButton
+                        }" id="title" name="title" class="form-control here" type="text"
+                          [(ngModel)]="productInfo.title" required #title="ngModel" maxlength="50" />
+                        <!-- Change to form error display component -->
+                        <span class="inlineStyle help-block float-left"
+                          *ngIf="!title.valid && title.touched">required</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="name" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Description</label>
+                      <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                        <input [ngClass]="{
+                          'toggle-border': !toggleProductInfoSaveButton
+                        }" id="description" name="description" class="form-control here" type="text"
+                          [(ngModel)]="productInfo.description" required #description="ngModel" maxlength="50" />
+                        <!-- Change to form error display component -->
+                        <span class="inlineStyle help-block float-left"
+                          *ngIf="!description.valid && description.touched">required</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="price" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Price</label>
+                      <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                        <input [ngClass]="{
+                          'toggle-border': !toggleProductInfoSaveButton
+                        }" id="price" name="price" class="form-control here toggle-border" type="number"
+                          [(ngModel)]="productInfo.price" #price="ngModel" />
+                          <span class="inlineStyle help-block float-left"
+                          *ngIf="!price.valid && price.touched">required</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="nickname" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Size of Farm (square meters)</label>
+                      <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                        <input [ngClass]="{
+                          'toggle-border': !toggleProductInfoSaveButton
+                        }" id="sizeofFarm" name="sizeofFarm" class="form-control here" type="number"
+                          [(ngModel)]="productInfo.sizeofFarm" maxlength="50" #sizeofFarm="ngModel" />
+                          <span class="inlineStyle help-block float-left"
+                          *ngIf="!sizeofFarm.valid && sizeofFarm.touched">required</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="price" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Location (country)</label>
+                      <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                        <input [ngClass]="{
+                          'toggle-border': !toggleProductInfoSaveButton
+                        }" id="location" name="location" class="form-control here toggle-border" type="text"
+                          [(ngModel)]="productInfo.location" maxlength="20" #location="ngModel" />
+                          <span class="inlineStyle help-block float-left"
+                          *ngIf="!location.valid && location.touched">required</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="price" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Return on Investment (%)</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                          <input [ngClass]="{
+                            'toggle-border': !toggleProductInfoSaveButton
+                          }" id="roi" name="roi" class="form-control here toggle-border" type="number"
+                            [(ngModel)]="productInfo.roi" min="1" #roi="ngModel" />
+                            <span class="inlineStyle help-block float-left"
+                          *ngIf="!roi.valid && roi.touched">required</span>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="duration" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Return Duration (months)</label>
+                        <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                          <input [ngClass]="{
+                            'toggle-border': !toggleProductInfoSaveButton
+                          }" id="duration" name="duration" class="form-control here toggle-border" type="number"
+                            [(ngModel)]="productInfo.duration" min="1" #duration="ngModel" />
+                            <span class="inlineStyle help-block float-left"
+                          *ngIf="!duration.valid && duration.touched">required</span>
+                        </div>
+                      </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3" *ngIf="myProduct()">
+        <div class="card-header">
+          <h6 class="card-title float-left">Product Documents</h6>
+        </div>
+        <div class="card-body">
+          <div class="conatainer-fluid">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="productPhoto" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Product Image</label>
+                  <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                    <input id="productPhoto" name="productPhoto" class="form-control here toggle-border" type="file"
+                       #productPhoto  accept="image/*" class="form-control" (change)="uploadActivated()"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row pl-4">
+                  <button [disabled]="isProcessing || !uploadAllowed"  class="btn btn-primary" (click)="editImage()"><i class="fas"
+                    [ngClass]="{'': !isProcessing, 'fa-spinner fa-spin': isProcessing}"></i>Upload</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5" *ngIf="!myProduct()" >
+    <div class="row p-2">
+      <div class="col-md-6 p-5" style="background-color: #f1f2f2; border-radius: 0.3rem;">
+        <div class="row mb-5" >
+          <div class="col-md-6" style="font-size: 2rem; line-height: 2rem !important;">
+            {{ productInfo.price | currency }} <br> <span  style="color: #f89f24;font-size: 1rem;">PER UNIT</span>
+          </div>
+        </div>
+        <div class="row mt-2 mb-5">
+          <div class="col-md-6 mb-3">
+            <h6 style="color: #f89f24;">DURATION</h6>
+            <span style="font-size: 1.5rem;">{{ productInfo.duration}} months</span>
+          </div>
+          <div class="col-md-6">
+            <h6 style="color: #f89f24;">LOCATION</h6>
+            <span style="font-size: 1.5rem;">{{ productInfo.location }}</span>
+          </div>
+        </div>
+        <hr class="mt-2 mb-5 text-center" style="background-color: darkgrey;">
+        <div class="row mt-2">
+          <div class="col-md-6">
+            <h6 style="color: #f89f24;">RETURN</h6>
+          <span style="font-size: 1.5rem;">{{ productInfo.roi }}%</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mt-4">
+        <h4 class="pl-5">Description</h4>
+        <div class="pl-5 p-3">
+          {{ productInfo.description }}
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h2 class="modal-title">{{title}}</h2>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="dismiss(0)">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>{{message}}</p>
+</div>
+<div class="modal-footer">
+  <div [ngClass]="{ 'd-flex justify-content-end': isConfirm }">
+    <button
+      *ngIf="isConfirm"
+      type="button"
+      class="btn btn-outline-secondary float-left"
+      (click)="dismiss(2)"
+    >
+      {{ cancelText }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-primary float-right ml-2"
+      (click)="dismiss(1)"
+    >
+      {{ okText }}
+    </button>
+  </div>
+</div>
