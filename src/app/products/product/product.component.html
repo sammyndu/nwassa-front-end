@@ -9,9 +9,9 @@
               <div class="col-lg-9 mb-4">
                <h5 class="font-weight-bold text-capitalize">{{ product.title }}</h5>
                <div class="product-meta-data">
-                <a  *ngIf="!myProduct(product.owner)" (click)="stop($event, product)" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i></a>
-                <a  href="#" [routerLink] = "[product.id]" *ngIf="myProduct(product.owner)" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                <a href="#" *ngIf="myProduct(product.owner)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
+                <a  *ngIf="!myProduct(product.owner)" (click)="stop($event, product)" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon_cart_alt"></i> Add to Cart</a>
+                <a (click)="delete($event, product.id)" *ngIf="myProduct(product.owner)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash-alt text-danger"><i class="fas"
+                  [ngClass]="{'': !isProcessing, 'fa-spinner fa-spin': isProcessing}"></i></i> Delete</a>
               </div>
               </div>
               <div class="col-lg-3 product-info text-sm-left p-3">

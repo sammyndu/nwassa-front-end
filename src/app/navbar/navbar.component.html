@@ -10,21 +10,21 @@
       <a class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"></a>
     </li>
     <li id="quizzesLink" class="nav-item dropdown no-arrow mx-1 nav-icon-hover">
-      <a class="nav-link" role="button" [routerLink]="['quizzes']" aria-haspopup="true"
+      <a class="nav-link" role="button" [routerLink]="['/']" aria-haspopup="true"
         aria-expanded="false">
         <i class="icon fas fa-home mt-1"></i>
         <b class=" d-none d-sm-inline font-weight-normal"> Home</b>
       </a>
     </li>
     <li class="nav-item dropdown no-arrow mx-1 nav-icon-hover">
-      <a class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
+      <a [routerLink]="['/about']" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
         <i class="icon fas fa-users mt-1" aria-hidden="true"></i>
         <b class="d-none d-sm-inline font-weight-normal"> About</b>
       </a>
     </li>
 
     <li class="nav-item dropdown no-arrow mx-1 nav-icon-hover">
-      <a class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
+      <a [routerLink]="['/contact']" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
         <i class="icon fas fa-address-book mt-1" aria-hidden="true"></i>
         <b class="d-none d-sm-inline font-weight-normal"> Contact</b>
       </a>
@@ -55,16 +55,16 @@
             <div class="container">
               <div class="row">
                 <div class="col-12 px-3">
-                  <a href="#" class="float-left user-dropdown-header" [routerLink]="['/profile/account']"
-                    [routerLinkActive]="['active']">{{ user.firstName }}</a>
+                  <a href="#" class="float-left user-dropdown-header" [routerLink]="['/profile']"
+                    [routerLinkActive]="['active']">My Profile</a>
                   <a (click)="logout()" class="float-right user-dropdown-header" data-toggle="modal"
                     data-target="#logoutModal">Logout</a>
                 </div>
               </div>
             </div>
 
-            <div class="dropdown-divider"></div>
-            <a routerLink="/profile" class="submenuLink">My Profile</a>
+            <!-- <div class="dropdown-divider"></div>
+            <a routerLink="/profile" class="submenuLink">My Profile</a> -->
 
           </ng-container>
         </div>

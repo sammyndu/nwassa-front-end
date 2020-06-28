@@ -29,4 +29,8 @@ export class ProductService {
     updateFile(file: any) {
         return this.http.put(`${environment.apiUrl}/products/updatefile`, file);
     }
+
+    delete(id: string) {
+        return this.http.delete(`${environment.apiUrl}/products/delete`, {params: {id} });
+    }
 }

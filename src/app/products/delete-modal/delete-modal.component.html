@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">Delete Product</h5>
+    <button type="button" class="close" (click)="dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body thin-scroll">
+   Are you sure you want to delete this product?
+  </div>
+  <div class="modal-footer">
+    <button (click)="dismiss()" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+    <button 
+        (click)="delete()" 
+        type="button"
+        class="btn text-light" 
+        style="background-color: #f89f24;">
+        Yes
+    </button>
+</div>

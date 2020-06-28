@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { JwtInterceptor } from './_helpers';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RegisterModalComponent } from './navbar/auth/widgets/register-modal/register-modal.component';
 import { LoginModalComponent } from './navbar/auth/widgets/login-modal/login-modal.component';
@@ -27,6 +27,11 @@ import { HomeComponent } from './home/home.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { CartItemComponent } from './products/cart-item/cart-item.component';
 import { ToastrModule } from 'ngx-toastr';
+import { FooterComponent } from './footer/footer.component';
+import { AboutComponent } from './about/about.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
+import { DeleteModalComponent } from './products/delete-modal/delete-modal.component';
+import { ChangePasswordComponent } from './user-profile/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,12 @@ import { ToastrModule } from 'ngx-toastr';
     EmailRegisterComponent,
     PhoneRegisterComponent,
     UserProfileComponent,
-    AddProductModalComponent
+    AddProductModalComponent,
+    FooterComponent,
+    AboutComponent,
+    ContactUsComponent,
+    DeleteModalComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

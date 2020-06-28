@@ -1,3 +1,5 @@
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangePassword } from './models/changePassword.model';
 import { AuthenticationService } from './../_services/authentication.service';
 import { UserInfo } from './models/userInfo.model';
 import { IDialogComponent } from '../shared/widgets/dialog/dialog-component';
@@ -8,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '@app/_services';
 import { ToastService } from '@app/_services/toast.service';
 import { environment } from '@environments/environment';
+import { DialogService } from '@app/shared/widgets/dialog/dialog.service';
 
 @Component({
     selector: 'app-add-product',
@@ -30,6 +33,7 @@ export class UserProfileComponent implements OnInit, IDialogComponent {
     constructor(
         private modalRef: BsModalRef,
         private authService: AuthenticationService,
+        private dialogService: DialogService,
         private userService: UserService,
         private toastService: ToastService) {
     }
@@ -89,6 +93,10 @@ export class UserProfileComponent implements OnInit, IDialogComponent {
             console.log(err);
         });
 
+    }
+
+    changePassword() {
+        this.dialogService.showComponent(ChangePasswordComponent);
     }
 
     dismiss() {

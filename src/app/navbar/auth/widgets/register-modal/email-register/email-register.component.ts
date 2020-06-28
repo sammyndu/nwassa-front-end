@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ToastService } from './../../../../../_services/toast.service';
 import { AuthenticationService } from '@app/_services';
 import { RegisterModel } from './../../../models/register.model';
@@ -24,7 +25,8 @@ export class EmailRegisterComponent implements OnInit, IDialogComponent {
   constructor(
     private modalref: BsModalRef,
     private authService: AuthenticationService,
-    private toastService: ToastService) { }
+    private toastService: ToastService,
+    private router: Router) { }
 
   ngOnInit(): void {}
 
@@ -35,12 +37,15 @@ export class EmailRegisterComponent implements OnInit, IDialogComponent {
         this.actionResult.emit(new DialogActionResult(DialogAction.ok, result));
         this.dismiss();
         this.toastService.showSuccess('You have been Registered sucessfully', 'Registeration Successful');
+        this.router.navigate(['/products']);
       },
       (err) => {
         console.log(err);
-        if (err.error.message.includes('User')) {
-          this.showError = true;
-          this.errMessage = err.error.message;
+        if (err.error.message)  {
+          if (err.error.message.includes('User')) {
+            this.showError = true;
+            this.errMessage = err.error.message;
+          }
         }
         this.toastService.showError('Something went wrong', 'Registeration Failed');
     });

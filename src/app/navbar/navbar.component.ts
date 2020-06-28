@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { DialogService } from './../shared/widgets/dialog/dialog.service';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { LoginModalComponent } from '@app/navbar/auth/widgets/login-modal/login-modal.component';
@@ -14,14 +15,14 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private dialogService: DialogService,
-    private authService: AuthenticationService) { }
+    private authService: AuthenticationService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.authService.currentUser
     .subscribe((result: any) => {
       if (result) {
         this.user = result.user;
-        console.log(result);
       }
     });
   }
@@ -37,6 +38,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.user = null;
+    this.router.navigate(['/']);
   }
 
 }

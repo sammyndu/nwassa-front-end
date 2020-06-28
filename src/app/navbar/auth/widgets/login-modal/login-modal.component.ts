@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { DialogService } from './../../../../shared/widgets/dialog/dialog.service';
 import { Subscription } from 'rxjs';
 import { LoginModel } from './../../models/login.models';
@@ -26,19 +27,22 @@ export class LoginModalComponent implements OnInit, IDialogComponent {
   constructor(
     private bsmodalRef: BsModalRef,
     private authService: AuthenticationService,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService,
+    private router: Router) { }
 
   ngOnInit(): void {
   }
 
   login() {
     this.isProcessing = true;
+    this.showError = false;
     const userLogin = this.loginModel;
     this.authService.login(userLogin.username, userLogin.password)
       .subscribe((result) => {
         this.actionResult.emit(new DialogActionResult(DialogAction.ok, result));
         this.dismiss();
         this.isProcessing = false;
+        this.router.navigate(['/products']);
       },
       (err) => {
         this.showError = true;

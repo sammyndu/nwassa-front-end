@@ -1,3 +1,4 @@
+import { ToastService } from '@app/_services';
 import { environment } from '@environments/environment';
 import { ProductInfo } from './add-product-modal/models/productInfo.model';
 import { ProductService } from './../_services/product.service';
@@ -33,7 +34,11 @@ export class ProductsComponent implements OnInit {
 
   public totalPrice = 0;
 
-  constructor(private dialogService: DialogService, private productService: ProductService) { }
+  public isProcessing = false;
+
+  constructor(private dialogService: DialogService,
+              private productService: ProductService,
+              private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.productService.getAll().subscribe((result) => {
@@ -63,6 +68,18 @@ export class ProductsComponent implements OnInit {
 
   calculateTotal() {
     this.totalPrice = this.cartItems.reduce((sum, current) => sum + parseInt(current.price, 10), 0);
+  }
+
+  delete(id: string) {
+    this.isProcessing = true;
+    this.realProducts = this.realProducts.filter((product) => product.id !== id);
+    this.productService.delete(id).subscribe(() => {
+      this.isProcessing = false;
+      this.toastService.showSuccess('Your Product was deleted successfully', 'Delete Success');
+    }, (err) => {
+      this.isProcessing = false;
+      this.toastService.showError('Something went wrong', 'Delete Failed');
+    });
   }
 
 }

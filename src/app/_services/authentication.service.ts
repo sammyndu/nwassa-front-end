@@ -1,4 +1,5 @@
-﻿import { UserInfo } from './../user-profile/models/userInfo.model';
+﻿import { ChangePassword } from './../user-profile/models/changePassword.model';
+import { UserInfo } from './../user-profile/models/userInfo.model';
 import { RegisterModel } from './../navbar/auth/models/register.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -40,6 +41,10 @@ export class AuthenticationService {
                 this.currentUserSubject.next(authUser);
                 return authUser;
             }));
+    }
+
+    changePassword(model: ChangePassword) {
+        return this.http.post<any>(`${environment.apiUrl}/accounts/changepassword`, model);
     }
 
     logout() {
