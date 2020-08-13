@@ -33,6 +33,11 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { DeleteModalComponent } from './products/delete-modal/delete-modal.component';
 import { ChangePasswordComponent } from './user-profile/change-password/change-password.component';
 
+import { Angular4PaystackModule } from 'angular4-paystack';
+import { AngularRaveModule } from 'angular-rave';
+
+import { PathLocationStrategy, LocationStrategy } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,13 +73,15 @@ import { ChangePasswordComponent } from './user-profile/change-password/change-p
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
       progressBar: true
-    })
+    }),
+    Angular4PaystackModule.forRoot('pk_test_79fb2e9f63daac02bb06dc44dc62332a7ad639bd'),
   ],
   providers: [
     DialogService,
     BsModalRef,
     ToastService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    {provide: LocationStrategy, useClass: PathLocationStrategy}
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

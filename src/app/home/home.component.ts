@@ -15,11 +15,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log();
+    window.scroll(0, 0);
     this.authService.currentUser
     .subscribe((result) => {
       this.user = result;
-      console.log(result);
     });
   }
 

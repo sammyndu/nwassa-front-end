@@ -1,10 +1,14 @@
-import { ToastService } from '@app/_services';
+import { UserInfo } from '@app/user-profile/models/userInfo.model';
+import { PurchaseService } from './../_services/purchase.service';
+import { ToastService, AuthenticationService } from '@app/_services';
 import { environment } from '@environments/environment';
 import { ProductInfo } from './add-product-modal/models/productInfo.model';
 import { ProductService } from './../_services/product.service';
 import { AddProductModalComponent } from './add-product-modal/add-product-modal.component';
 import { DialogService } from './../shared/widgets/dialog/dialog.service';
 import { Component, OnInit } from '@angular/core';
+import { PurchaseInfo } from '@app/_models';
+import { PaymentInstance } from 'angular-rave';
 
 @Component({
   selector: 'app-products',
@@ -28,26 +32,30 @@ export class ProductsComponent implements OnInit {
     }
   ];
 
+  public user = new UserInfo();
   public realProducts = [];
-
+  public reference = '';
   public cartItems = [];
-
   public totalPrice = 0;
-
+  public publicKey = 'pk_test_79fb2e9f63daac02bb06dc44dc62332a7ad639bd';
+  public purchase = new PurchaseInfo();
   public isProcessing = false;
 
-  constructor(private dialogService: DialogService,
+  constructor(private authService: AuthenticationService,
+              private dialogService: DialogService,
               private productService: ProductService,
+              private purchaseService: PurchaseService,
               private toastService: ToastService) { }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.productService.getAll().subscribe((result) => {
       this.realProducts = result;
-      this.realProducts.forEach((product: ProductInfo) => {
-        product.productPhoto = `${environment.apiUrl}/products/image?img=${product.productPhoto}&id=${product.id}`;
-      });
-      console.log(this.realProducts);
     });
+    this.authService.currentUser.subscribe((result) => {
+      this.user = result;
+    });
+    this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
   }
 
   addToCart(event: any) {
@@ -58,7 +66,31 @@ export class ProductsComponent implements OnInit {
   }
 
   addProduct() {
-    this.dialogService.showComponent(AddProductModalComponent, '', 'large');
+    this.authService.currentUser.subscribe((result) => {
+      if (!result.passportPhoto || !result.validIdPhoto || !result.bvn) {
+        this.toastService.showError('Please complete your profile to add a product', 'Incomplete Profile');
+        return;
+      }
+      this.dialogService.showComponent(AddProductModalComponent, '', 'large');
+    });
+  }
+
+  checkOut(ref, purchaseItems) {
+    const title = 'Payment successfull';
+    // console.log(title, ref, purchaseItems);
+    purchaseItems.forEach(item => {
+      // console.log(item);
+      this.purchase.productIds = [];
+      this.purchase.productIds.push(item.id);
+    });
+    this.purchaseService.create(this.purchase).subscribe((result) => {
+      if (result) {
+        this.toastService.showSuccess('Your Purchase was successful', 'Puchase Success');
+        this.cartItems = [];
+      }
+    }, (err) => {
+      this.toastService.showSuccess('Something went wrong', 'Puchase Failed');
+    });
   }
 
   removeItem(item) {
@@ -68,6 +100,19 @@ export class ProductsComponent implements OnInit {
 
   calculateTotal() {
     this.totalPrice = this.cartItems.reduce((sum, current) => sum + parseInt(current.price, 10), 0);
+  }
+
+  paymentInit() {
+    console.log('Payment initialized', this.totalPrice);
+  }
+
+  paymentDone(ref: any) {
+    const title = 'Payment successfull';
+    console.log(title, ref);
+  }
+
+  paymentCancel() {
+    console.log('payment failed');
   }
 
   delete(id: string) {

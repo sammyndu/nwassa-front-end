@@ -17,5 +17,7 @@ export class UserInfo{
         this.phoneNumber = dto.phoneNumber;
         this.email = dto.email;
         this.bvn = dto.bvn;
+        this.passportPhoto = dto.passportPhoto;
+        this.validIdPhoto = dto.validIdPhoto;
     }
 }

@@ -16,7 +16,7 @@
               </div>
               <div class="col-lg-3 product-info text-sm-left p-3">
                 <div class="mb-3" style="font-size: 1.5rem;">
-                  {{ product.price | currency }} <span style="color: #f89f24;font-size: 0.9rem;">PER UNIT</span>
+                  {{ product.price | currency:"NGN":"&#8358;" }} <span style="color: #f89f24;font-size: 0.9rem;">PER UNIT</span>
                 </div>
                 <div class="mb-3" style="font-size: 1.5rem;">
                   {{ product.roi }}% <span class="mb-0" style="font-size: 0.9rem;"><br>in {{ product.duration }} months</span>

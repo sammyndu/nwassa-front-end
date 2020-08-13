@@ -4,7 +4,7 @@
     </td>
     <td class="cart_product_desc">
       <p>{{ item.name }}</p>
-      <h6>{{ item.price | currency }}</h6>
+      <h6>{{ item.price | currency:"NGN":"&#8358;" }}</h6>
     </td>
     <td class="pro-close">
       <a (click)="removeItem(item)"><i class="icon_close"></i></a>

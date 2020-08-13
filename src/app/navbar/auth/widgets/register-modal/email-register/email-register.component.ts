@@ -31,17 +31,20 @@ export class EmailRegisterComponent implements OnInit, IDialogComponent {
   ngOnInit(): void {}
 
   register(form: NgForm) {
+    this.isProcessing = true;
     if (form.valid) {
       this.authService.register(this.registerModel)
       .subscribe((result) => {
+        this.isProcessing = false;
         this.actionResult.emit(new DialogActionResult(DialogAction.ok, result));
         this.dismiss();
         this.toastService.showSuccess('You have been Registered sucessfully', 'Registeration Successful');
         this.router.navigate(['/products']);
       },
       (err) => {
+        this.isProcessing = false;
         console.log(err);
-        if (err.error.message)  {
+        if (err.error)  {
           if (err.error.message.includes('User')) {
             this.showError = true;
             this.errMessage = err.error.message;

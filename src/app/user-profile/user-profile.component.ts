@@ -21,13 +21,16 @@ export class UserProfileComponent implements OnInit, IDialogComponent {
 
     actionResult = new EventEmitter<DialogActionResult>();
     @ViewChild('personalInfoForm') profileForm: NgForm;
-    @ViewChild('userPassportPhoto', {static: false}) passportPhoto: ElementRef;
-    @ViewChild('userIdCard', {static: false}) idCard: ElementRef;
+    @ViewChild('passportPhoto', {static: false}) passportPhoto: ElementRef;
+    @ViewChild('idCard', {static: false}) idCard: ElementRef;
 
     public togglePersonalInfoSaveButton = false;
     public isProcessing = false;
     public user = new UserInfo();
     public personalInfo = new UserInfo();
+    public uploadIdCardAllowed =  false;
+    public uploadPassportAllowed =  false;
+    public userImgUrl: string;
     public defaultImg = '/assets/img/userImage.png';
 
     constructor(
@@ -39,10 +42,10 @@ export class UserProfileComponent implements OnInit, IDialogComponent {
     }
 
     ngOnInit() {
+        window.scroll(0, 0);
         this.authService.currentUser.subscribe((result) => {
-            console.log(result);
-            this.user = result.user;
-            this.personalInfo.fromdto(result.user);
+            this.user = result;
+            this.personalInfo.fromdto(result);
         });
     }
 
@@ -70,8 +73,10 @@ export class UserProfileComponent implements OnInit, IDialogComponent {
         formData.append('idCard', this.idCard.nativeElement.files[0]);
         formData.append('id', this.user.id);
         this.userService.updateFile(formData).subscribe(() => {
-            this.toastService.showSuccess('Your Product Image was updated successfully', 'Image Update Success');
+            this.toastService.showSuccess('Your Id Card was updated successfully', 'Id Card Update Success');
             this.isProcessing = false;
+            this.personalInfo.validIdPhoto = this.idCard.nativeElement.files[0].name;
+            this.authService.setUserContext(this.personalInfo);
             // this.imgUrl = `${environment.imgUrl}?img=${this.idCard.nativeElement.files[0].name}&id=${this.user.id}`;
         }, (err) => {
             this.toastService.showError('Something went wrong', 'Update Failed');
@@ -80,12 +85,38 @@ export class UserProfileComponent implements OnInit, IDialogComponent {
         });
     }
 
-    uploadPassportPhoto() {}
+    uploadPassportPhoto() {
+        this.isProcessing = true;
+        const formData = new FormData();
+
+        console.log(this.passportPhoto.nativeElement.files);
+
+        if (this.passportPhoto.nativeElement.files.length === 0) {
+            this.isProcessing = false;
+            return;
+        }
+        formData.append('passportPhoto', this.passportPhoto.nativeElement.files[0]);
+        formData.append('id', this.user.id);
+        this.userService.updateFile(formData).subscribe(() => {
+            this.toastService.showSuccess('Your Passport was updated successfully', 'Passport Update Success');
+            this.isProcessing = false;
+            this.personalInfo.passportPhoto = this.passportPhoto.nativeElement.files[0].name;
+            this.authService.setUserContext(this.personalInfo);
+            location.reload();
+        }, (err) => {
+            this.toastService.showError('Something went wrong', 'Update Failed');
+            this.isProcessing = false;
+            console.log(err);
+        });
+    }
 
     save(id: any) {
         this.isProcessing = true;
         this.userService.update(this.personalInfo).subscribe(() => {
             this.toastService.showSuccess('Your Profile was updated successfully', 'Update Success');
+            this.authService.setUserContext(this.personalInfo);
+            this.profileForm.form.markAsPristine();
+            this.togglePersonalInfoSaveButton = false;
             this.isProcessing = false;
         }, (err) => {
             this.toastService.showError('Something went wrong', 'Update Failed');
@@ -93,6 +124,22 @@ export class UserProfileComponent implements OnInit, IDialogComponent {
             console.log(err);
         });
 
+    }
+
+    uploadIdCardActivated() {
+        if (this.idCard.nativeElement.files.length !== 0) {
+            this.uploadIdCardAllowed = true;
+            return;
+        }
+        this.uploadIdCardAllowed = false;
+    }
+
+    uploadPassportActivated() {
+        if (this.passportPhoto.nativeElement.files.length !== 0) {
+            this.uploadPassportAllowed = true;
+            return;
+        }
+        this.uploadPassportAllowed = false;
     }
 
     changePassword() {

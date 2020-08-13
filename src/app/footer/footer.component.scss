@@ -56,7 +56,7 @@
 
 @media screen and (max-width: 530px) {
     .marquee-content li {
-        width: 28vw;
+        width: 29vw;
         font-size: 0.7rem;
     } 
     .marquee-content {
@@ -64,13 +64,13 @@
     }
     @keyframes scrolling {
         0% { transform: translateX(0); }
-        100% { transform: translateX(-252vw); }
+        100% { transform: translateX(-261vw); }
     }
 }
 
 @media screen and (max-width: 440px) {
     .marquee-content li {
-        width: 32vw;
+        width: 33vw;
         font-size: 0.7rem;
     } 
     .marquee-content {
@@ -78,7 +78,7 @@
     }
     @keyframes scrolling {
         0% { transform: translateX(0); }
-        100% { transform: translateX(-288vw); }
+        100% { transform: translateX(-297vw); }
     }
     .market-prices > .title {
         height: 8vh;

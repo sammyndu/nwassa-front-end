@@ -57,7 +57,9 @@
                     <div class="form-group row">
                       <label for="middlename" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
-                        <input id="middlename" name="email" class="form-control here toggle-border" type="text"
+                        <input [ngClass]="{
+                          'toggle-border': !togglePersonalInfoSaveButton && !personalInfo.email
+                        }" id="middlename" name="email" class="form-control here toggle-border" type="text"
                           [(ngModel)]="personalInfo.email" #email="ngModel" />
                       </div>
                     </div>
@@ -73,7 +75,9 @@
                     <div class="form-group row">
                       <label for="middlename" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">BVN</label>
                       <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
-                        <input id="middlename" name="bvn" class="form-control here toggle-border" type="text"
+                        <input [ngClass]="{
+                          'toggle-border': !togglePersonalInfoSaveButton && personalInfo.bvn
+                        }" id="middlename" name="bvn" class="form-control here toggle-border" type="text"
                           [(ngModel)]="personalInfo.bvn" maxlength="20" #bvn="ngModel" />
                       </div>
                     </div>
@@ -92,7 +96,50 @@
         </div>
       </div>
 
-      
+      <div class="card mb-3">
+        <div class="card-header">
+          <h6 class="card-title float-left">Personal Documents</h6>
+        </div>
+        <div class="card-body">
+          <div class="conatainer-fluid">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="idCard" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Valid Id Card</label>
+                  <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                    <input id="idCard" name="idCard" class="form-control here toggle-border" type="file"
+                       #idCard  accept="image/*" class="form-control" (change)="uploadIdCardActivated()"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row pl-4">
+                  <button [disabled]="isProcessing || !uploadIdCardAllowed"  class="btn btn-primary" (click)="uploadIdCard()"><i class="fas"
+                    [ngClass]="{'': !isProcessing, 'fa-spinner fa-spin': isProcessing}"></i>Upload</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="passportPhoto" class="col-md-4 col-lg-4 col-sm-12 col-xm-12 col-form-label">Passport Photo</label>
+                  <div class="col-md-8 col-lg-8 col-sm-12 col-xm-12">
+                    <input id="passportPhoto" name="passportPhoto" class="form-control here toggle-border" type="file"
+                       #passportPhoto  accept="image/*" class="form-control" (change)="uploadPassportActivated()"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row pl-4">
+                  <button [disabled]="isProcessing || !uploadPassportAllowed"  class="btn btn-primary" (click)="uploadPassportPhoto()"><i class="fas"
+                    [ngClass]="{'': !isProcessing, 'fa-spinner fa-spin': isProcessing}"></i>Upload</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

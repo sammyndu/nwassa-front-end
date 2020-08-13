@@ -1,105 +1,146 @@
 <div class="modal-body">
-    <form #registerationForm="ngForm" (ngSubmit)="register(registerationForm)" class="needs-validation" novalidate>
+  <div *ngIf="showError" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ errMessage }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    <form #registerationForm="ngForm" class="needs-validation" novalidate>
         <div class="form-group mb-3">
           <div class="form-row">
-            <div class="col-md-12">
+            <div class="col-md-12 mb-3">
               <div class="form-label-group">
                 <label for="registerInputPhone" class="text-bold text-dark"><b>Phone Number</b></label>
                 <input
                   id="registerInputPhone"
                   type="tel"
                   class="form-control"
+                  [ngClass]="{'is-invalid': phone?.errors && phone?.touched }"
                   name="phone"
-                  placeholder="Phone Number"
                   required
                   pattern="[0-9]{11}"
                   [(ngModel)]="registerModel.phoneNumber"
                   #phone="ngModel"
                 />
               </div>
-              <div class="invalid-feedback">
-                Please choose a username.
-              </div>
+              <span *ngIf="phone?.touched! && phone.errors?.pattern" class="text-danger">
+                Invalid Input<br>
+              </span>
+              <span *ngIf="phone?.touched && phone?.errors?.required" class="text-danger">
+                This field is required
+              </span>
             </div>
           </div>
       
     
         <div class="form-row">
-          <div class="col-md-6">
+          <div class="col-md-6 mb-3">
             <div class="form-label-group">
               <label for="registerInputFirstName" class="font-weight-bold text-dark">First Name</label>
               <input
                 id="registerInputFirstName"
                 type="text"
                 class="form-control"
+                [ngClass]="{'is-invalid': firstName?.errors && firstName?.touched }"
                 name="firstname"
-                placeholder="First Name"
-                required
+                
+                required="required"
+                #firstName="ngModel"
                 [(ngModel)]="registerModel.firstName"
-                #firstname="ngModel"
               />
+              <span *ngIf="firstName?.touched && !firstName?.valid" class="text-danger">
+                This field is required
+              </span>
             </div>
-            <div *ngIf="firstname.errors.required"> 
-				User name required.
-			</div>	
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 mb-3">
             <div class="form-label-group">
               <label for="registerInputLastName" class="font-weight-bold text-dark">Last Name</label>
               <input
                 id="registerInputLastName"
                 type="text"
                 class="form-control"
+                [ngClass]="{'is-invalid': lastName?.errors && lastName?.touched }"
                 name="lastname"
-                placeholder="Last Name"
+                
                 required="required"
                 [(ngModel)]="registerModel.lastName"
-                #lastname="ngModel"
+                #lastName="ngModel"
               />
+              <span *ngIf="lastName?.touched && !lastName?.valid" class="text-danger">
+                This field is required
+              </span>
             </div>
           </div>
         </div>
     
      <div class="form-row">
-       <div class="col-md-6">
+       <div class="col-md-6 mb-3">
         <div class="form-label-group">
           <label for="registerInputPassword" class="text-bold text-dark"><b>Password</b></label>
           <input
             id="registerInputPassword"
             type="password"
             class="form-control"
+            [ngClass]="{'is-invalid': password?.errors && password?.touched }"
             name="password"
-            placeholder="Password"
+            minlength="6"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+            title="Must contain at least one  number and one uppercase and lowercase letter, and at least 6 or more characters"
             required="required"
             [(ngModel)]="registerModel.password"
             #password="ngModel"
           />
+          <span *ngIf="password?.touched && password?.errors?.pattern" class="text-danger">
+            Must contain at least one  number and one uppercase and lowercase letter, and at least 6 or more characters
+          </span>
+          <span *ngIf="password?.touched && password?.errors?.required" class="text-danger">
+            This field is required
+          </span>
         </div>
        </div>
-       <div class="col-md-6">
+       <div class="col-md-6 mb-3">
         <div class="form-label-group">
           <label for="registerInputConfirmPassword" class="text-bold text-dark"><b>Confirm Password</b></label>
           <input
             id="registerInputConfirmPassword"
             type="password"
             class="form-control"
-            name="confirmpassword"
-            placeholder="Confirm Password"
+            [ngClass]="{'is-invalid': confirmPassword?.errors && confirmPassword?.touched }"
+            name="confirmPassword"
+            minlength="6"
             required="required"
             [(ngModel)]="registerModel.confirmPassword"
-            #confirmpassword="ngModel"
+            #confirmPassword="ngModel"
           />
+          <span *ngIf="confirmPassword?.touched && passwordNotMatchErrorDisplay()" class="text-danger">
+            Passwords do not match!
+          </span>
         </div>
        </div>
      </div>
     </div>
-    <button 
+    <!-- <button 
     type="submit" 
     class="btn text-light form-control" 
+    style="background-color: #f89f24;"
+    [disabled]="!registerationForm.valid || passwordNotMatchErrorDisplay()">
+    <i class="fas" [ngClass]="{'': !isProcessing, 'fa-spinner fa-spin': isProcessing}"></i>
+    Register
+</button> -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="dismiss()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button 
+   
+    (click)="register(registerationForm)" 
+    type="button" class="btn text-light" 
+    [disabled]="isProcessing"
     style="background-color: #f89f24;">
     <i class="fas" [ngClass]="{'': !isProcessing, 'fa-spinner fa-spin': isProcessing}"></i>
     Register
-</button>
-    </form>
+  </button>
+    <!-- <button (click)="register(phoneregisterationForm)" *ngIf="emailRegister" type="button" class="btn text-light" style="background-color: #f89f24;">Register</button> -->
   </div>
 

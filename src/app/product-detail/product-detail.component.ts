@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductInfo } from '@app/products/add-product-modal/models/productInfo.model';
 import { UserInfo } from '@app/user-profile/models/userInfo.model';
 import { AuthenticationService, ProductService, ToastService } from '@app/_services';
-import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,7 +21,6 @@ export class ProductDetailComponent implements OnInit {
     public productInfo = new ProductInfo();
     public productId: string;
     public defaultImg = '/assets/img/userImage.png';
-    public imgUrl: string;
     public user = new UserInfo();
     @ViewChild('productPhoto', {static: false}) productPhoto: ElementRef;
 
@@ -38,20 +36,18 @@ export class ProductDetailComponent implements OnInit {
       this.productService.get(this.productId).subscribe((result) => {
         this.product = result;
         this.productInfo.fromdto(this.product);
-        console.log(result);
-        this.imgUrl = `${environment.imgUrl}?img=${this.product.productPhoto}&id=${this.productId}`;
-        console.log(this.imgUrl);
+        this.authService.currentUser.subscribe((user) => {
+            this.user.fromdto(user);
+        });
       });
-      this.authService.currentUser.subscribe((result) => {
-          this.user.fromdto(result.user);
-      });
+      window.scroll(0, 0);
     }
 
     editButtonClicked() {
         this.toggleProductInfoSaveButton = !this.toggleProductInfoSaveButton;
     }
 
-    myProduct() {
+    get myProduct() {
         return this.user.id === this.product.owner;
     }
 
@@ -70,7 +66,7 @@ export class ProductDetailComponent implements OnInit {
         this.productService.updateFile(formData).subscribe(() => {
             this.toastService.showSuccess('Your Product Image was updated successfully', 'Image Update Success');
             this.isProcessing = false;
-            this.imgUrl = `${environment.imgUrl}?img=${this.productPhoto.nativeElement.files[0].name}&id=${this.productId}`;
+            location.reload();
         }, (err) => {
             this.toastService.showError('Something went wrong', 'Update Failed');
             this.isProcessing = false;

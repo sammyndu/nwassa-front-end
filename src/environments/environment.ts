@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:44363/api',
-  imgUrl: 'https://localhost:44363/api/products/image'
+  apiUrl: 'https://nwassa-app.herokuapp.com/api',
 };
 
 /*

@@ -28,7 +28,7 @@ export class ChangePasswordComponent implements OnInit, IDialogComponent {
 
   ngOnInit(): void {
     this.authService.currentUser.subscribe((result) => {
-      this.user.fromdto(result.user);
+      this.user.fromdto(result);
     });
   }
 

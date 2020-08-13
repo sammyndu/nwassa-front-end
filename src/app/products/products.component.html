@@ -74,11 +74,21 @@
                 <h6>SUBTOTAL</h6>
               </div>
               <div class="total-price">
-                <h6>{{ totalPrice | currency }}</h6>
+                <h6>{{ totalPrice | currency:"NGN":"&#8358;" }}</h6>
               </div>
             </div>
             <!-- Checkout -->
-            <a href="#" class="btn famie-btn checkout-btn mt-30 w-100">Checkout</a>
+            <a
+            angular4-paystack
+            [email]="user.email"
+            [amount]="totalPrice"
+            [ref]="reference"
+            (paymentInit)="paymentInit()"
+            (close)="paymentCancel()"
+            (callback)="checkOut($event, cartItems)"
+            class="btn famie-btn checkout-btn mt-30 w-100 text-light">
+            Checkout
+          </a>
           </div>
 
           <!-- Single Widget Area -->

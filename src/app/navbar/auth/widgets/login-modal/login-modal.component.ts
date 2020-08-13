@@ -1,3 +1,4 @@
+import { ToastService } from './../../../../_services/toast.service';
 import { Router } from '@angular/router';
 import { DialogService } from './../../../../shared/widgets/dialog/dialog.service';
 import { Subscription } from 'rxjs';
@@ -28,7 +29,8 @@ export class LoginModalComponent implements OnInit, IDialogComponent {
     private bsmodalRef: BsModalRef,
     private authService: AuthenticationService,
     private dialogService: DialogService,
-    private router: Router) { }
+    private router: Router,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
   }
@@ -45,10 +47,16 @@ export class LoginModalComponent implements OnInit, IDialogComponent {
         this.router.navigate(['/products']);
       },
       (err) => {
-        this.showError = true;
-        this.errMessage = err.error.message;
-        this.isProcessing = false;
-        console.log(err);
+        if (err.error) {
+          this.showError = true;
+          this.errMessage = err.error.message;
+          this.isProcessing = false;
+        }else {
+          this.toastService.showError('Something went Wrong', 'Login Error');
+          this.isProcessing = false;
+          this.dismiss();
+          console.log(err);
+        }
     });
   }
 

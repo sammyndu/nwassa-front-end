@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.authService.currentUser.subscribe((response) => {
       if (response) {
-        this.user = response.user;
+        this.user = response;
       }
     });
   }
